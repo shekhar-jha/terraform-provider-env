@@ -1,0 +1,8 @@
+# Created by .ignore support plugin (hsz.mobi)
+#.gitignore
+.idea/**
+vendor/**
+dist/**
+examples/terraform*
+examples/.terraform*
+**/**.log
