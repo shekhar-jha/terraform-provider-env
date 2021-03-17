@@ -51,6 +51,5 @@ signs:
 release:
 # If you want to manually examine the release before its live, uncomment this line:
 # draft: true
-  disable: true
 changelog:
   skip: true
