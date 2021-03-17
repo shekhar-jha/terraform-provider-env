@@ -1,8 +1,8 @@
 terraform {
   required_providers {
     env = {
-      version = "~> 0.1"
-      source = "github.com/shekhar-jha/env"
+      version = "~> 0.0.1"
+      source = "shekhar-jha/env"
     }
   }
 }

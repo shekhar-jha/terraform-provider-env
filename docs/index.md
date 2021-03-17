@@ -9,18 +9,4 @@ description: |-
 
 Provides access to environment details of the server on which terraform is being run.
 
-## Example Usage
-
-```terraform
-terraform {
-  required_providers {
-    env = {
-      version = "~> 0.1"
-      source = "shekhar-jha/env"
-    }
-  }
-}
-
-data "env_os" "all_envs" {
-}
-```
+Please refer to data source for specific sources available.
