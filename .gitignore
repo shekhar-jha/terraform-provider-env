@@ -3,6 +3,6 @@
 .idea/**
 vendor/**
 dist/**
-examples/terraform*
-examples/.terraform*
+examples/**/terraform*
+examples/**/.terraform*
 **/**.log
