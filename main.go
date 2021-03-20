@@ -15,7 +15,7 @@ var (
 	version string = "dev"
 
 	// goreleaser can also pass the specific commit if you want
-	commit  string = ""
+	commit string = ""
 )
 
 func main() {
@@ -36,10 +36,11 @@ func main() {
 		}
 		return
 	}
+	log.Println("Start serving....")
 	plugin.Serve(opts)
 }
 
-func providerSchema(version string) func() *schema.Provider{
+func providerSchema(version string) func() *schema.Provider {
 	log.Printf("Entering providerSchema(version: %s)", version)
 	defer log.Printf("Exiting providerSchema(version)")
 	return func() *schema.Provider {

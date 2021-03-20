@@ -2,13 +2,14 @@
 page_title: "env_os Data Source - terraform-provider-env"
 
 subcategory: ""
-description: |-
-  The env_os data source allows you to retrieve all environment variables of the terraform process running the provider plugin.
+description: |- The env_os data source allows you to retrieve all environment variables of the terraform process running
+the provider plugin.
 ---
 
 # Data Source `env_os`
 
-The env_os data source allows you to retrieve all environment variables of the terraform process running the provider plugin.
+The env_os data source allows you to retrieve all environment variables of the terraform process running the provider
+plugin.
 
 ## Example Usage
 

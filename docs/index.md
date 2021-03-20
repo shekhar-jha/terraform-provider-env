@@ -1,8 +1,7 @@
 ---
 page_title: "Provider: env"
 subcategory: ""
-description: |-
-  Terraform provider for interacting with machine on which terraform is running.
+description: |- Terraform provider for interacting with machine on which terraform is running.
 ---
 
 # Env Provider
