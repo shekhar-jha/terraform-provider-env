@@ -5,8 +5,8 @@ NAME=env
 BINARY=terraform-provider-${NAME}
 VERSION=0.1.0
 OS_ARCH=darwin_amd64
-GIT_STATUS=$(git status --porcelain)
-GIT_TAG_VALUE=$(git tag)
+GIT_STATUS=$$(git status --porcelain)
+GIT_TAG_VALUE=$(git describe --abbrev=0 --tags)
 EXPECTED_TAG_VALUE=v${VERSION}
 EMPTY_STRING=
 
@@ -31,7 +31,7 @@ release: releasePrereq
 ifneq ($(GIT_TAG_VALUE), $(EXPECTED_TAG_VALUE))
 	git tag ${EXPECTED_TAG_VALUE}
 endif
-	goreleaser
+	goreleaser 
 
 install: build
 	mkdir -p ~/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${OS_ARCH}
