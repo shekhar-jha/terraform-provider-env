@@ -29,11 +29,14 @@ endif
 
 tag:
 	@GIT_TAG_VALUE=$$(git describe --abbrev=0 --tags);\
-	GIT_EXPECTED_TAG_VALUE="v${VERSION}";
+	GIT_EXPECTED_TAG_VALUE="v${VERSION}";\
 	echo "Current tag $${GIT_TAG_VALUE} Expected tag: $${GIT_EXPECTED_TAG_VALUE}"; \
-	if [ [ ! -z "$${GIT_TAG_VALUE}" ] && ["$${GIT_TAG_VALUE}" != "$${GIT_EXPECTED_TAG_VALUE}"] ]; \
+	if [ "$${GIT_TAG_VALUE}" != "$${GIT_EXPECTED_TAG_VALUE}" ]; \
 	then \
-		git tag ${EXPECTED_TAG_VALUE}; \
+	  	echo "Tagging..."; \
+		git tag "$${GIT_EXPECTED_TAG_VALUE}"; \
+	else \
+	  	echo "Skipping tagging";\
 	fi
 
 release: releasePrereq git-status tag
