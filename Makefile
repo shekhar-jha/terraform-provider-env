@@ -22,7 +22,6 @@ endif
 ifndef GPG_FINGERPRINT
 	$(error GPG_FINGERPRINT is not specified. Please run 'gpg --list-secret-keys --keyid-format LONG' to identify the fingerprint that should be used to sign the release)
 endif
-	@echo "git status ${GIT_STATUS}"
 ifneq ($(GIT_STATUS), $(EMPTY_STRING))
 	$(error Not all the changes have been committed. Please ensure that output of 'git status --porcelain' is empty)
 endif
