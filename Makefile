@@ -7,6 +7,7 @@ VERSION=0.1.0
 OS_ARCH=darwin_amd64
 GIT_STATUS=$$(git status --porcelain)
 GIT_TAG_VALUE=$$(git tag)
+EXPECTED_TAG_VALUE=v${VERSION}
 
 default: install
 
@@ -20,14 +21,14 @@ endif
 ifndef GPG_FINGERPRINT
 	$(error GPG_FINGERPRINT is not specified. Please run 'gpg --list-secret-keys --keyid-format LONG' to identify the fingerprint that should be used to sign the release)
 endif
-ifneq (${GIT_STATUS}, "")
+ifneq ($(GIT_STATUS), "")
 	$(error Not all the changes have been committed. Please ensure that output of 'git status --porcelain' is empty)
 endif
 
 release: releasePrereq
 	git push
-ifneq (${GIT_TAG_VALUE}, "v${VERSION}")
-	git tag "v${VERSION}"
+ifneq ($(GIT_TAG_VALUE), $(EXPECTED_TAG_VALUE))
+	git tag ${EXPECTED_TAG_VALUE}
 endif
 	goreleaser
 
