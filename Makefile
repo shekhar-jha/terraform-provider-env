@@ -36,7 +36,10 @@ tag:
 	  	echo "Tagging..."; \
 		git tag "$${GIT_EXPECTED_TAG_VALUE}"; \
 	else \
-	  	echo "Skipping tagging";\
+	  	echo "Deleting current tag";\
+		git tag -d "$${GIT_EXPECTED_TAG_VALUE}"; \
+	  	echo "Tagging...";\
+		git tag "$${GIT_EXPECTED_TAG_VALUE}"; \
 	fi
 
 release: releasePrereq git-status tag
