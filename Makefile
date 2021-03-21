@@ -5,25 +5,31 @@ NAME=env
 BINARY=terraform-provider-${NAME}
 VERSION=0.1.0
 OS_ARCH=darwin_amd64
+GIT_STATUS=$$(git status --porcelain)
+GIT_TAG_VALUE=$$(git tag)
 
 default: install
 
 build:
 	go build -o ${BINARY}
 
-release:
-	GOOS=darwin GOARCH=amd64 go build -o ./bin/${BINARY}_${VERSION}_darwin_amd64
-	GOOS=freebsd GOARCH=386 go build -o ./bin/${BINARY}_${VERSION}_freebsd_386
-	GOOS=freebsd GOARCH=amd64 go build -o ./bin/${BINARY}_${VERSION}_freebsd_amd64
-	GOOS=freebsd GOARCH=arm go build -o ./bin/${BINARY}_${VERSION}_freebsd_arm
-	GOOS=linux GOARCH=386 go build -o ./bin/${BINARY}_${VERSION}_linux_386
-	GOOS=linux GOARCH=amd64 go build -o ./bin/${BINARY}_${VERSION}_linux_amd64
-	GOOS=linux GOARCH=arm go build -o ./bin/${BINARY}_${VERSION}_linux_arm
-	GOOS=openbsd GOARCH=386 go build -o ./bin/${BINARY}_${VERSION}_openbsd_386
-	GOOS=openbsd GOARCH=amd64 go build -o ./bin/${BINARY}_${VERSION}_openbsd_amd64
-	GOOS=solaris GOARCH=amd64 go build -o ./bin/${BINARY}_${VERSION}_solaris_amd64
-	GOOS=windows GOARCH=386 go build -o ./bin/${BINARY}_${VERSION}_windows_386
-	GOOS=windows GOARCH=amd64 go build -o ./bin/${BINARY}_${VERSION}_windows_amd64
+releasePrereq:
+ifndef GITHUB_TOKEN
+	$(error GITHUB_TOKEN is not specified with personal access token. Please specify the same to automatically push the release to github )
+endif
+ifndef GPG_FINGERPRINT
+	$(error GPG_FINGERPRINT is not specified. Please run 'gpg --list-secret-keys --keyid-format LONG' to identify the fingerprint that should be used to sign the release)
+endif
+ifneq (GIT_STATUS, "")
+	$(error Not all the changes have been committed. Please ensure that output of 'git status --porcelain' is empty)
+endif
+
+release: releasePrereq
+	git push
+ifneq (GIT_TAG_VALUE, "v${VERSION}")
+	git tag "v${VERSION}"
+endif
+	goreleaser
 
 install: build
 	mkdir -p ~/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${OS_ARCH}
