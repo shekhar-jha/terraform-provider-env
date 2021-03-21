@@ -27,7 +27,6 @@ ifneq ($(GIT_STATUS), $(EMPTY_STRING))
 endif
 
 release: releasePrereq
-	git push
 ifneq ($(GIT_TAG_VALUE), $(EXPECTED_TAG_VALUE))
 	git tag ${EXPECTED_TAG_VALUE}
 endif
