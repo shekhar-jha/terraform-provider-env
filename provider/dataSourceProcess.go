@@ -94,7 +94,14 @@ func dataSourceProcessRead(ctx context.Context, d *schema.ResourceData, m interf
 	diags = AddAttributeValueToResourceData(func() interface{} { return os.Geteuid() }, d, "process_user_id_effective", diags)
 	diags = AddAttributeValueToResourceData(func() interface{} { return os.Getuid() }, d, "process_user_id", diags)
 	diags = AddAttributeValueToResourceData(func() interface{} { return os.Getgid() }, d, "process_group_id", diags)
-	diags = AddAttributeValueToResourceDataAndHandleError(func() (interface{}, error) { return os.Getgroups() }, d, "process_secondary_group_ids", "group ids of process", diags)
+	diags = AddAttributeValueToResourceDataAndHandleError(func() (interface{}, error) {
+		groups, err := os.Getgroups()
+		if err != nil {
+			log.Printf("Failed to retrieve group details for process on platform due to error %v", err)
+			return make([]int, 0, 0), nil
+		} else {
+			return groups, err
+		}
+	}, d, "process_secondary_group_ids", "group ids of process", diags)
 	return diags
 }
-
