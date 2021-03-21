@@ -11,7 +11,8 @@ func Provider() *schema.Provider {
 	return &schema.Provider{
 		DataSourcesMap: map[string]*schema.Resource{
 			// terraform date source name: data source schema
-			"env_os": dataSourceEnvironmentSchema(),
+			"env_os":           dataSourceEnvironmentSchema(),
+			"env_process_data": dataSourceProcessSchema(),
 		},
 	}
 }
